@@ -9,8 +9,6 @@ const ownerid = ('474730486787211265')
 const fs = require('fs')
 const moment = require("moment");
 const db = require('quick.db');
-const giphy = require('giphy-api')();    
-const googl = require('goo.gl');  
 
 console.log("Iginte");
 
