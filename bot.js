@@ -47,21 +47,6 @@ client.on('ready', () => {//source
     console.log('')
     console.log('╚[════════════════════════════════════]╝')
   });
-const adminprefix = "*";
-const devs = ['474730486787211265'];
-client.on('message', message => {//restart
-    if(message.content === adminprefix + "restart") {
-          if (!devs.includes(message.author.id)) return;
-              message.channel.send(`⚠️ **الشخص الذي اعاد تشغيل البوت ${message.author.username}**`);
-            console.log(`⚠️ جاري اعادة تشغيل البوت... ⚠️`);
-            client.destroy();
-            child_process.fork(__dirname + "/bot.js");
-            console.log(`تم اعادة تشغيل البوت`);
-        }
-
-
-    });
-});
 client.on('message', message => {//av mension
     if (message.content.startsWith(prefix + "avatar")) {
 
