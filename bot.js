@@ -1,80 +1,116 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const client = new Discord.Client();
+const jimp = require("jimp");// npm i jimp
+const package = ('package.json');
+const yt = require('ytdl-core');
+const prefix = ("*")
+const child_process = require("child_process");
+const ownerid = ('474730486787211265')
+const fs = require('fs')
+const moment = require("moment");
+const db = require('quick.db');
+const giphy = require('giphy-api')();    
+const googl = require('goo.gl');  
+const translate = require('google-translate-api');   
+const getYoutubeID = require('get-youtube-id');   
+const { Client, Util } = require('discord.js');  
+const UserBlocked = new Set();   
+const math = require('math-expression-evaluator'); 
+const stripIndents = require('common-tags').stripIndents;
+const figlet = require('figlet');
+const google = require('google-it'); 
+const queue = new Map(); 
+const zalgo = require('zalgolize');   
+const fetchVideoInfo = require('youtube-info');
+const YouTube = require('simple-youtube-api');
+const sql = require("sqlite");
+const dateFormat = require('dateformat'); 
+const pretty = require('pretty-ms') 
 
-client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
+,ti={}  
+,spee={};
+
+console.log("Iginte");
+
+client.on('ready', () => {//source
+    console.log('╔[════════════════════════════════════]╗');
+    console.log('')
+    console.log('            ╔[════════════]╗')
+    console.log('              Bot Is Online')
+    console.log('            ╚[════════════]╝')
+    console.log('')
+    console.log(`Logged in as ${client.user.tag}!`);
+    console.log('')
+    console.log(`servers! [ " ${client.guilds.size} " ]`);
+    console.log('')
+    console.log(`Users! [ " ${client.users.size} " ]`);
+    console.log('')
+    console.log('╚[════════════════════════════════════]╝')
+  });
+const adminprefix = "*";
+const devs = ['474730486787211265'];
+client.on('message', message => {//restart
+    if(message.content === adminprefix + "restart") {
+          if (!devs.includes(message.author.id)) return;
+              message.channel.send(`⚠️ **الشخص الذي اعاد تشغيل البوت ${message.author.username}**`);
+            console.log(`⚠️ جاري اعادة تشغيل البوت... ⚠️`);
+            client.destroy();
+            child_process.fork(__dirname + "/bot.js");
+            console.log(`تم اعادة تشغيل البوت`);
+        }
+
+
+    });
 });
+client.on('message', message => {//av mension
+    if (message.content.startsWith(prefix + "avatar")) {
 
-client.on('ready',  () => {
-  console.log('By : hamodi#1151 ');
-  console.log(`Logged in as * [ " ${client.user.username} " ] servers! [ " ${client.guilds.size} " ]`);
-  console.log(`Logged in as * [ " ${client.user.username} " ] Users! [ " ${client.users.size} " ]`);
-  console.log(`Logged in as * [ " ${client.user.username} " ] channels! [ " ${client.channels.size} " ]`);
-  console.log(`F9 bot is online now with aut any problem`);
-});
-
-client.on('message', message => {
-    if (message.content.startsWith("*avatar")) {
         var mentionned = message.mentions.users.first();
-    var x5bzm;
+    var king66s;
       if(mentionned){
-          var x5bzm = mentionned;
+          var king66s = mentionned;
       } else {
-          var x5bzm = message.author;
-          
+          var king66s = message.author;
+
       }
         const embed = new Discord.RichEmbed()
         .setColor("RANDOM")
-        .setImage(`${x5bzm.avatarURL}`)
+          .setAuthor(message.author.username, message.author.avatarURL)
+        .setImage(`${king66s.avatarURL}`)
       message.channel.sendEmbed(embed);
+
+    }
+  });
+
+    client.on("message", message => {    //serv-av
+        if(!message.channel.guild) return;
+ if(message.author.bot) return;
+    if(message.content === prefix + "image"){
+        const embed = new Discord.RichEmbed()
+
+    .setTitle(`صورة سيرفر : ** ${message.guild.name} **`)
+.setAuthor(message.author.username, message.guild.iconrURL)
+  .setColor('RANDOM')
+  .setImage(message.guild.iconURL)
+
+ message.channel.send({embed});
     }
 });
 
-   client.on("message", message => {
-    const prefix = "*"
-              
-          if(!message.channel.guild) return;
-   if(message.author.bot) return;
-      if(message.content === prefix + "image"){ 
-          const embed = new Discord.RichEmbed()
-  
-      .setTitle(`This is  ** ${message.guild.name} **  Photo !`)
-  .setAuthor(message.author.username, message.guild.iconrURL)
-    .setColor(0x164fe3)
-    .setImage(message.guild.iconURL)
-    .setURL(message.guild.iconrURL)
-                    .setTimestamp()
-
-   message.channel.send({embed});
-      }
-  });
-  
-  client.on('message', message => {
-  const port = '25565'
-  if(message.content.startsWith('*mcstats')) {
- const args = message.content.split(" ").slice(1).join(" ")
-    if (!args) return message.channel.send("** يجب كتابة ايدي السيرفر . **");
-        let embed = new Discord.RichEmbed()
-        .setColor('RANDOM')
-        .setThumbnail(`https://api.minetools.eu/favicon/${args}/25565`)
-        .addField("📜 اسم السيرفر",`${args}`,true)
-        .addField("🌐 بورت السيرفر",`${port}`)
-        .setImage(`http://status.mclive.eu/${args}/${args}/25565/banner.png`)
-        .setFooter(`F9 Bot.`)
-                .setTimestamp()
-    message.channel.send(embed)      
-}})
-
-client.on('message', message => {
-    if (message.content.startsWith("*info")) {
-      message.channel.send({
- embed: new Discord.RichEmbed() 
-    .setColor("#38a481")
-    .addField('**الذاكرة المستخدمة 💾**', `${(process.memoryUsage().rss / 1000000).toFixed()}MB`, true)
-         .addField('**سرعة الاتصال📡**' , `${Date.now() - message.createdTimestamp}` + ' ms')
-        .addField('**استخدام المعالج💿**', `${(process.cpuUsage().rss / 10000).toFixed()}%`, true)
-     })
-    }
-  });
+client.on('message', message => { //ping
+    if(!message.channel.guild) return;
+if (message.content.startsWith(prefix + 'ping')) {
+if(!message.channel.guild) return;
+var msg = `${Date.now() - message.createdTimestamp}`
+var api = `${Math.round(client.ping)}`
+if (message.author.bot) return;
+let embed = new Discord.RichEmbed()
+.setAuthor(message.author.username,message.author.avatarURL)
+.setColor('RANDOM')
+.addField('**Time Taken:**',msg + " ms 📶 ")
+.addField('**WebSocket:**',api + " ms 📶 ")
+message.channel.send({embed:embed});
+}
+});
   
 client.login(process.env.BOT_TOKEN);
