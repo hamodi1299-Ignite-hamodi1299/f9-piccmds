@@ -77,5 +77,24 @@ let embed = new Discord.RichEmbed()
 message.channel.send({embed:embed});
 }
 });
+
+client.on("message", message => {
+    if (!message.content.startsWith(prefix)) return;
+      let command = message.content.split(" ")[0];
+      command = command.slice(prefix.length);
+        if(command === "mcskin") {
+                const args = message.content.split(" ").slice(1).join(" ")
+        if (!args) return message.channel.send(`
+
+        __**الاستعمل الصحيح :ok_hand:**__
+
+  ❖**mcskin <user> ** ==>**لاظهار سكن اي شخص في ماينكرافت**
+  **الرجاء كتابة اسم شخص لعرض سكنه**
+
+  `);
+        const image = new Discord.Attachment(`https://minotar.net/armor/body/${args}`, "skin.png");
+    message.channel.send(image)
+        }
+    });
   
 client.login(process.env.BOT_TOKEN);
